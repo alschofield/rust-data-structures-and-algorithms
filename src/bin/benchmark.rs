@@ -36,8 +36,15 @@ fn main() {
 
     match module.as_str() {
         // TODO: Add setup, operation, verification, and teardown for each completed module.
-        "search" | "sorting" | "stack" | "queue" | "singly-linked-list" | "dynamic-array"
-        | "hash-table" | "binary-search-tree" => {
+        "algorithms/searching/linear-search"
+        | "algorithms/searching/binary-search"
+        | "algorithms/sorting/comparison/bubble-sort"
+        | "data-structures/linear/stacks/stack"
+        | "data-structures/linear/queues/queue"
+        | "data-structures/linear/linked/singly-linked-list"
+        | "data-structures/linear/arrays/dynamic-array"
+        | "data-structures/associative/hash-tables/separate-chaining"
+        | "data-structures/trees/binary-search-trees/binary-search-tree" => {
             eprintln!("{module} benchmark is scaffolded but not implemented yet");
         }
         _ => eprintln!("unknown module: {module}"),

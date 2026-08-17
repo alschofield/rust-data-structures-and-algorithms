@@ -1,6 +1,7 @@
 # Benchmark Design
 
-Add one benchmark function per completed module to `src/bin/benchmark.rs`.
+`src/bin/benchmark.rs` is the benchmark harness; it contains no benchmark
+functions because no module is complete.
 
 Every benchmark must:
 
