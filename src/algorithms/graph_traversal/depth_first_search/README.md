@@ -6,13 +6,17 @@ backtracking, using recursion or an explicit stack.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn depth_first_search(
+    graph: &AdjacencyList,
+    source: usize,
+) -> Option<Vec<usize>>;
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a traversal of the shape `fn
-depth_first_search(graph: &AdjacencyList, source: usize) ->
-Option<Vec<usize>>` (visit order, with discovery/finish variants as needed).
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+`AdjacencyList` is the graph from
+`data_structures/graphs/representations/adjacency_list`.
+Discovery/finish-time variants extend the same shape.
 
 ## Contract
 
@@ -31,14 +35,3 @@ Option<Vec<usize>>` (visit order, with discovery/finish variants as needed).
 
 - Time: O(V + E) with an adjacency list
 - Space: O(V) for the visited set plus recursion/stack depth up to O(V)
-
-## Learning Focus
-
-DFS is the substrate for a large family of graph algorithms: topological sort,
-cycle detection, connected components, and edge classification all fall out of
-its discovery/finish structure. Implementing both forms teaches how the call
-stack is an implicit data structure, and the iterative version in Rust
-sidesteps stack-overflow risk that the recursive form carries on deep graphs.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

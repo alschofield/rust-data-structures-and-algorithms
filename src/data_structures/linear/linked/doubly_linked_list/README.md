@@ -6,14 +6,29 @@ owned bidirectional nodes and without `std::collections::LinkedList`.
 ## Required API
 
 ```rust
-pub fn new<T>() -> T;
+pub struct DoublyLinkedList<T> { /* fields private */ }
+
+impl<T> DoublyLinkedList<T> {
+    pub fn new() -> Self;
+    pub fn push_front(&mut self, item: T);
+    pub fn push_back(&mut self, item: T);
+    pub fn pop_front(&mut self) -> Option<T>;
+    pub fn pop_back(&mut self) -> Option<T>;
+    pub fn get(&self, index: usize) -> Option<&T>;
+    pub fn insert(&mut self, index: usize, item: T) -> Result<(), T>;
+    pub fn remove(&mut self, index: usize) -> Option<T>;
+    pub fn len(&self) -> usize;
+    pub fn is_empty(&self) -> bool;
+}
+
+impl<T> Default for DoublyLinkedList<T> {
+    fn default() -> Self;
+}
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a `DoublyLinkedList<T>` type
-offering `new`, front/back push and pop, indexed `get`/`insert`/`remove`,
-`len`, and `is_empty`, following the same `Option`/`Result` conventions as the
-singly linked list.
+The checked-in source is still the scaffold stub `pub fn new<T>() -> T`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+The `Option`/`Result` conventions follow the singly linked list.
 
 ## Contract
 
@@ -37,14 +52,3 @@ singly linked list.
 - `get`, `insert`, `remove` by index: O(n), at most n/2 steps from the nearer
   end
 - Space: O(n) nodes, two links of overhead per node
-
-## Learning Focus
-
-The doubly linked list is where Rust's ownership model visibly bites: two
-owners per node is impossible, so back-edges force an explicit aliasing
-strategy. Implementing it teaches the trade-offs between an unsafe-core/safe-
-API design and `Rc<RefCell>` interior mutability, and why encapsulating a
-small unsafe region behind a sound interface is a core systems-Rust skill.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

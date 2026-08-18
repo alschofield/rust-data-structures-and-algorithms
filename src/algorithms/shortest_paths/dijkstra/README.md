@@ -6,13 +6,14 @@ weights, driven by a min-priority queue over tentative distances.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn dijkstra(graph: &WeightedGraph, source: usize) -> Option<Vec<Option<u64>>>;
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a solver of the shape `fn
-dijkstra(graph: &WeightedGraph, source: usize) -> Option<Vec<Option<u64>>>`
-(distances, with parent-tracking variants as needed).
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+`WeightedGraph` is the non-negative-weight digraph this module
+defines alongside the algorithm. Unreachable vertexes report `None`;
+parent-tracking variants extend the same shape.
 
 ## Contract
 
@@ -35,15 +36,3 @@ dijkstra(graph: &WeightedGraph, source: usize) -> Option<Vec<Option<u64>>>`
 
 - Time: O((V + E) log V) with a binary heap
 - Space: O(V) for distances, parents, and the heap
-
-## Learning Focus
-
-Dijkstra is BFS generalized to weighted graphs: the FIFO queue becomes a
-priority queue and levels become tentative distances. Implementing it teaches
-the greedy exchange argument for why settled vertices are final, why that
-argument collapses under negative weights, and — in Rust — how `Option<u64>`
-models infinity without sentinel values and how min-heap ordering is expressed
-through `Ord` implementations.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

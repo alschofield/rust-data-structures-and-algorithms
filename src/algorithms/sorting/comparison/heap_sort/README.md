@@ -6,12 +6,11 @@ root to the tail and re-heapifies the shrinking prefix.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn heap_sort<T: Ord>(items: &mut [T]);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-heap_sort<T: Ord>(items: &mut [T])`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -32,15 +31,3 @@ heap_sort<T: Ord>(items: &mut [T])`.
 - Average: O(n log n)
 - Worst: O(n log n)
 - Space: O(1), in place and iterative
-
-## Learning Focus
-
-Heap sort is the only classic sort with a worst-case O(n log n) bound and O(1)
-extra space, which makes it the fallback stage of introsort. Implementing it
-teaches the implicit binary-tree encoding of a slice, why bottom-up heap
-construction is linear, and how the sorted suffix and heap prefix share one
-buffer without conflict — all expressible with safe indexing and
-`slice::swap`.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

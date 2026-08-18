@@ -6,12 +6,11 @@ on every comparison.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn binary_search<T: Ord>(items: &[T], target: &T) -> Option<usize>;
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a search of the shape `fn
-binary_search<T: Ord>(items: &[T], target: &T) -> Option<usize>`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -31,15 +30,3 @@ binary_search<T: Ord>(items: &[T], target: &T) -> Option<usize>`.
 - Average: O(log n)
 - Worst: O(log n)
 - Space: O(1) iterative
-
-## Learning Focus
-
-Binary search is short but notoriously easy to get subtly wrong: off-by-one
-bounds, non-terminating loops, and midpoint overflow are classic defects.
-Implementing it builds the loop-invariant discipline ("the target, if present,
-is always inside the current range") that generalizes to partition-based
-algorithms, and `usize` arithmetic makes the overflow and empty-range edge
-cases pleasantly unforgiving.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

@@ -6,13 +6,17 @@ any vertex at distance k + 1, using a FIFO queue.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn breadth_first_search(
+    graph: &AdjacencyList,
+    source: usize,
+) -> Option<Vec<usize>>;
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a traversal of the shape `fn
-breadth_first_search(graph: &AdjacencyList, source: usize) ->
-Option<Vec<usize>>` (visit order, with distance/parent variants as needed).
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+`AdjacencyList` is the graph from
+`data_structures/graphs/representations/adjacency_list`. Distance and
+parent-tracking variants extend the same shape.
 
 ## Contract
 
@@ -32,14 +36,3 @@ Option<Vec<usize>>` (visit order, with distance/parent variants as needed).
 
 - Time: O(V + E) with an adjacency list
 - Space: O(V) for the visited set, queue, and parent storage
-
-## Learning Focus
-
-BFS shows that a traversal's order is entirely a property of its frontier data
-structure — swap the queue for a stack and you get DFS from the same skeleton.
-The enqueue-time-marking rule is a classic correctness subtlety worth getting
-wrong once and understanding. BFS is also the foundation Dijkstra generalizes:
-same pattern, priority queue instead of FIFO.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

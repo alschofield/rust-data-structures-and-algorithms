@@ -6,13 +6,12 @@ counts into positions, and places elements directly.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn counting_sort(items: &mut [u32], key_limit: u32);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-counting_sort(items: &mut [u32], max_key: u32)` (or an equivalent keyed
-variant).
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+Keys must lie in `[0, key_limit)`.
 
 ## Contract
 
@@ -34,14 +33,3 @@ variant).
 - Average: O(n + k)
 - Worst: O(n + k)
 - Space: O(n + k) auxiliary
-
-## Learning Focus
-
-Counting sort is the proof that the O(n log n) lower bound applies only to
-comparison sorts — with structural knowledge of the keys you can sort in
-linear time. Implementing the prefix-sum placement pass teaches how counts
-become positions, and preserving stability in that pass is the exact skill
-radix sort depends on.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

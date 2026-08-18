@@ -6,12 +6,11 @@ a match is found or the slice is exhausted.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn linear_search<T: PartialEq>(items: &[T], target: &T) -> Option<usize>;
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a search of the shape `fn
-linear_search<T: PartialEq>(items: &[T], target: &T) -> Option<usize>`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -29,14 +28,3 @@ linear_search<T: PartialEq>(items: &[T], target: &T) -> Option<usize>`.
 - Average: O(n)
 - Worst: O(n) (target absent or last)
 - Space: O(1)
-
-## Learning Focus
-
-Linear search is the baseline every other search is measured against. In Rust
-the exercise is also about API shape: `Option<usize>` makes not-found a value
-rather than a sentinel, and the `PartialEq` bound is the minimal capability
-the algorithm actually needs — a first lesson in choosing the loosest
-sufficient trait bound.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

@@ -6,12 +6,11 @@ counting sort per digit, least significant digit first.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn radix_sort(items: &mut [u32]);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-radix_sort(items: &mut [u32])`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -32,14 +31,3 @@ radix_sort(items: &mut [u32])`.
 - Average: O(d(n + k))
 - Worst: O(d(n + k))
 - Space: O(n + k) auxiliary
-
-## Learning Focus
-
-Radix sort shows how a stable subroutine composes into a bigger algorithm:
-LSD ordering works only because earlier (less significant) passes are never
-undone by later stable passes. Implementing it makes the radix/digit-count
-trade-off concrete — larger radix means fewer passes but bigger count arrays —
-and bit-mask digit extraction is a clean exercise in integer manipulation.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

@@ -6,13 +6,12 @@ them with an auxiliary buffer.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn merge_sort<T: Ord + Clone>(items: &mut [T]);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-merge_sort<T: Ord + Clone>(items: &mut [T])` (or an ownership-based variant
-avoiding `Clone`).
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+An ownership-based variant avoiding `Clone` is equally acceptable.
 
 ## Contract
 
@@ -31,15 +30,3 @@ avoiding `Clone`).
 - Average: O(n log n)
 - Worst: O(n log n)
 - Space: O(n) auxiliary buffer (plus O(log n) recursion depth)
-
-## Learning Focus
-
-Merge sort is the canonical divide-and-conquer algorithm and the cleanest
-proof that comparison sorting can be O(n log n) worst case. Implementing the
-merge step precisely — left-first on ties, correct exhaustion handling — shows
-where stability actually comes from. In Rust, deciding between a `Clone`-based
-buffer and `split_at_mut` ownership juggling is itself an instructive design
-decision.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

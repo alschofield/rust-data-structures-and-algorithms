@@ -6,14 +6,19 @@ Goal-directed shortest-path search that orders the frontier by
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn a_star(
+    graph: &WeightedGraph,
+    source: usize,
+    goal: usize,
+    heuristic: impl Fn(usize) -> u64,
+) -> Option<Vec<usize>>;
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a solver of the shape `fn
-a_star(graph: &WeightedGraph, source: usize, goal: usize, heuristic: impl
-Fn(usize) -> u64) -> Option<Vec<usize>>` (the path, or `None` when
-unreachable).
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
+`WeightedGraph` is the non-negative-weight digraph this module
+defines alongside the algorithm. The return value is the optimal
+path, or `None` when the goal is unreachable or inputs are invalid.
 
 ## Contract
 
@@ -37,16 +42,3 @@ unreachable).
   heuristic gives no pruning); a strong admissible heuristic prunes most of
   the graph in practice
 - Space: O(V) for scores, parents, and the frontier
-
-## Learning Focus
-
-A-star shows how domain knowledge slots into a general algorithm without
-breaking its guarantees: the heuristic reshapes exploration order while
-admissibility preserves optimality. Implementing it clarifies the
-admissible/consistent distinction and why the goal test must happen at
-extraction, not at edge relaxation — testing early sacrifices optimality.
-Passing the heuristic as a generic `Fn` parameter is idiomatic Rust for
-pluggable strategies.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

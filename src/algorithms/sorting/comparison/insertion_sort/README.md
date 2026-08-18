@@ -6,12 +6,11 @@ until it reaches its correct position.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn insertion_sort<T: Ord>(items: &mut [T]);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-insertion_sort<T: Ord>(items: &mut [T])`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -30,15 +29,3 @@ insertion_sort<T: Ord>(items: &mut [T])`.
 - Average: O(n^2)
 - Worst: O(n^2) (reverse-sorted input)
 - Space: O(1), in place
-
-## Learning Focus
-
-Insertion sort is the standard example of an adaptive algorithm: its cost is
-proportional to the number of inversions, not just n, which is why it serves
-as the small-subarray base case inside merge and quick sort. Implementing the
-shift-then-place pattern in safe Rust (rotate or swap-walk rather than holding
-an element out of a borrowed slice) is a useful exercise in expressing a C
-idiom under ownership rules.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

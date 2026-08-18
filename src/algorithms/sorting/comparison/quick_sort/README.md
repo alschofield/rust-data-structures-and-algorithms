@@ -6,12 +6,11 @@ recursively sorts both sides.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn quick_sort<T: Ord>(items: &mut [T]);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-quick_sort<T: Ord>(items: &mut [T])`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -35,15 +34,3 @@ quick_sort<T: Ord>(items: &mut [T])`.
 - Worst: O(n^2) (adversarial pivots)
 - Space: O(log n) expected recursion depth (recurse on the smaller side),
   in place otherwise
-
-## Learning Focus
-
-Quick sort teaches partitioning, the workhorse primitive behind quickselect
-and many divide-and-conquer routines, and is the clearest case study in
-average-case versus worst-case analysis. In Rust, recursing on
-`split_at_mut` halves expresses the disjointness of the two partitions in the
-type system — the borrow checker enforces what a C programmer must argue by
-hand.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

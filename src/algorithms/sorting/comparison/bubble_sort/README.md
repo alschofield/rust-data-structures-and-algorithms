@@ -6,12 +6,11 @@ out-of-order pairs until a full pass makes no swaps.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub fn bubble_sort<T: Ord>(items: &mut [T]);
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a sort of the shape `fn
-bubble_sort<T: Ord>(items: &mut [T])`.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -31,14 +30,3 @@ bubble_sort<T: Ord>(items: &mut [T])`.
 - Average: O(n^2)
 - Worst: O(n^2) (reverse-sorted input)
 - Space: O(1), in place
-
-## Learning Focus
-
-Bubble sort teaches the anatomy of a comparison sort in its simplest form: the
-invariant that grows a sorted suffix, why adjacent-only swaps guarantee
-stability, and how a cheap flag turns a quadratic algorithm into a linear-time
-verifier of sorted input. In Rust, `slice::swap` sidesteps the borrow-checker
-friction of manual two-element exchanges.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

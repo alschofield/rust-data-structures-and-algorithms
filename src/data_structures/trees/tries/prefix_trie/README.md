@@ -6,14 +6,25 @@ implemented with owned prefix nodes and without a map collection.
 ## Required API
 
 ```rust
-pub fn new<T>() -> T;
+pub struct PrefixTrie { /* fields private */ }
+
+impl PrefixTrie {
+    pub fn new() -> Self;
+    pub fn insert(&mut self, key: &str);
+    pub fn contains(&self, key: &str) -> bool;
+    pub fn starts_with(&self, prefix: &str) -> bool;
+    pub fn remove(&mut self, key: &str) -> bool;
+    pub fn len(&self) -> usize;
+    pub fn is_empty(&self) -> bool;
+}
+
+impl Default for PrefixTrie {
+    fn default() -> Self;
+}
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a `PrefixTrie` type offering `new`,
-`insert(&mut self, key: &str)`, `contains(&self, key: &str) -> bool`,
-`starts_with(&self, prefix: &str) -> bool`, `remove(&mut self, key: &str) ->
-bool`, and `len`.
+The checked-in source is still the scaffold stub `pub fn new<T>() -> T`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -36,14 +47,3 @@ bool`, and `len`.
   independent of the number of stored keys
 - Space: O(total characters across stored keys) worst case; shared prefixes
   share nodes
-
-## Learning Focus
-
-The trie replaces hashing and comparison with structural position: a key's
-characters are its address. Building the child storage by hand (rather than
-nesting a map) forces a real representation decision with lookup/memory
-trade-offs, and remove-with-pruning in owned-node Rust is a good exercise in
-restructuring a tree you are borrowing your way down.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

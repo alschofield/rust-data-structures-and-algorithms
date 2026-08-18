@@ -6,14 +6,21 @@ indexed by vertex pair. The standard choice for dense graphs.
 ## Required API
 
 ```rust
-pub fn exercise();
+pub struct AdjacencyMatrix { /* fields private */ }
+
+impl AdjacencyMatrix {
+    pub fn new(vertex_count: usize, directed: bool) -> Self;
+    pub fn add_edge(&mut self, from: usize, to: usize) -> Option<bool>;
+    pub fn remove_edge(&mut self, from: usize, to: usize) -> Option<bool>;
+    pub fn has_edge(&self, from: usize, to: usize) -> Option<bool>;
+    pub fn neighbors(&self, vertex: usize) -> Option<impl Iterator<Item = usize> + '_>;
+    pub fn vertex_count(&self) -> usize;
+    pub fn edge_count(&self) -> usize;
+}
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies an `AdjacencyMatrix` type offering
-construction for a fixed vertex count, `add_edge`, `remove_edge`, `has_edge`,
-neighbor iteration, and vertex/edge counts, using `Option`/`Result` returns
-for out-of-range vertexes.
+The checked-in source is still the scaffold stub `pub fn exercise()`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -35,15 +42,3 @@ for out-of-range vertexes.
 - Iterate neighbors of u: O(V), regardless of degree
 - Full traversal of all edges: O(V^2)
 - Space: O(V^2), independent of edge count
-
-## Learning Focus
-
-The matrix is the memory-for-speed extreme of graph representation: O(1) edge
-checks bought with O(V^2) space and O(V) neighbor scans. Implementing both
-representations against the same conceptual interface makes concrete how
-representation choice changes algorithm cost — BFS on a matrix is O(V^2), not
-O(V + E) — and where the matrix earns its keep (dense graphs, Floyd-Warshall,
-constant-time edge queries).
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.

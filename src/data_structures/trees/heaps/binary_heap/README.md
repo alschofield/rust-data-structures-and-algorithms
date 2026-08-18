@@ -6,13 +6,24 @@ without `std::collections::BinaryHeap`.
 ## Required API
 
 ```rust
-pub fn new<T>() -> T;
+pub struct BinaryHeap<T> { /* fields private */ }
+
+impl<T: Ord> BinaryHeap<T> {
+    pub fn new() -> Self;
+    pub fn push(&mut self, item: T);
+    pub fn pop(&mut self) -> Option<T>;
+    pub fn peek(&self) -> Option<&T>;
+    pub fn len(&self) -> usize;
+    pub fn is_empty(&self) -> bool;
+}
+
+impl<T: Ord> Default for BinaryHeap<T> {
+    fn default() -> Self;
+}
 ```
 
-The module exposes only this scaffold entry point, which panics via `todo!`
-when invoked. The contract below specifies a `BinaryHeap<T: Ord>` type
-offering `new`, `push`, `pop -> Option<T>`, `peek -> Option<&T>`, `len`, and
-`is_empty`.
+The checked-in source is still the scaffold stub `pub fn new<T>() -> T`,
+which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 
@@ -34,14 +45,3 @@ offering `new`, `push`, `pop -> Option<T>`, `peek -> Option<&T>`, `len`, and
 - `peek`, `len`, `is_empty`: O(1)
 - Build from n items via bottom-up heapify: O(n)
 - Space: O(n) contiguous, no per-element pointer overhead
-
-## Learning Focus
-
-The heap demonstrates that a complete tree needs no pointers — index
-arithmetic is the structure. Implementing sift-up and sift-down as dual
-restoration passes, and understanding why bottom-up construction is O(n)
-while n pushes cost O(n log n), builds the amortized-analysis instincts used
-by heap sort, Dijkstra, and A-star downstream in this curriculum.
-
-Status: scaffold — the source is a `todo!` stub; the ignored test marks the
-unimplemented state.
