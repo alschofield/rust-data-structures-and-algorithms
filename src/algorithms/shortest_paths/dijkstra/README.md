@@ -3,14 +3,32 @@
 Single-source shortest paths on a weighted graph with non-negative edge
 weights, driven by a min-priority queue over tentative distances.
 
+## How It Works
+
+BFS grown up to handle weighted edges: the ripple expands by total path cost
+instead of hop count. Every vertex carries a tentative best-known distance
+(infinity at the start). Repeatedly extract the cheapest unsettled vertex —
+this is why the min-priority queue exists — and settle it: no cheaper route
+to it can exist, because any alternative would have to pass through something
+already more expensive. That settlement argument is exactly what negative
+edge weights break, which is why they must be rejected.
+
+Settling a vertex relaxes its edges: for each neighbor, if going through the
+settled vertex beats the neighbor's current best, update the distance and
+record the settled vertex as its parent. The parent links reconstruct the
+actual shortest path once the goal settles.
+
 ## Required API
 
 ```rust
-pub fn dijkstra(graph: &WeightedGraph, source: usize) -> Option<Vec<Option<u64>>>;
+pub struct DijkstraResult {
+    pub distances: Vec<Option<u64>>,
+    pub parents: Vec<Option<usize>>,
+}
+
+pub fn dijkstra(graph: &WeightedGraph, source: usize) -> Option<DijkstraResult>;
 ```
 
-The checked-in source is still the scaffold stub `pub fn exercise()`,
-which panics via `todo!`; the ignored test marks the unimplemented state.
 `WeightedGraph` is the non-negative-weight digraph this module
 defines alongside the algorithm. Unreachable vertexes report `None`;
 parent-tracking variants extend the same shape.
@@ -22,8 +40,8 @@ parent-tracking variants extend the same shape.
 - A vertex's distance is final when it is extracted from the priority queue;
   it is never revisited afterward.
 - Relaxation: for edge (u, v, w), if `dist[u] + w < dist[v]`, update `dist[v]`
-  and the parent link. Lazy insertion with stale-entry skipping is acceptable
-  in place of decrease-key; stale entries must be detectably skipped.
+  and the parent link. With a binary heap, decrease-key or lazy insertion with
+  stale-entry skipping is acceptable; stale entries must be detectably skipped.
 - Unreachable vertices report `None` for distance, never a garbage value.
 - Parent links must reconstruct an actual shortest path from the source.
 - Correct on graphs with cycles, parallel edges, and self-loops; an invalid

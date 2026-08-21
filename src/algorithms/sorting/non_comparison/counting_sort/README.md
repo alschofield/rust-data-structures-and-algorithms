@@ -3,20 +3,29 @@
 Non-comparison integer sort that counts key occurrences, prefix-sums the
 counts into positions, and places elements directly.
 
+## How It Works
+
+No comparisons at all. Keys are small integers in a known range [0, k), so
+counting replaces comparing: tally how many of each key exist, prefix-sum the
+tallies so each key knows where its block of the output starts, then place
+every element directly into its computed slot. Because nothing is compared,
+the O(n log n) lower bound on comparison sorts does not apply — the cost is
+O(n + k). The placement pass iterates the input in reverse so equal keys keep
+their original order; that stability is not a nicety, it is the property
+radix sort is built on.
+
 ## Required API
 
 ```rust
 pub fn counting_sort(items: &mut [u32], key_limit: u32);
 ```
 
-The checked-in source is still the scaffold stub `pub fn exercise()`,
-which panics via `todo!`; the ignored test marks the unimplemented state.
 Keys must lie in `[0, key_limit)`.
 
 ## Contract
 
-- Applies to integer keys in a known range `[0, k)`; the key range is a
-  precondition, not something discovered by comparison.
+- Applies to integer keys in a known range `[0, k)` (or an offset range); the
+  key range is a precondition, not something discovered by comparison.
 - Stable: the output-placement pass must iterate the input in reverse (or use
   an equivalent scheme) so equal keys keep their original relative order.
   Stability here is what makes radix sort possible.

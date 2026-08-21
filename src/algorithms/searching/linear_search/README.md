@@ -3,14 +3,20 @@
 Sequential scan that finds a target by comparing every element in order until
 a match is found or the slice is exhausted.
 
+## How It Works
+
+The honest baseline: examine elements front to back until one matches or the
+input is exhausted. No ordering precondition, no preprocessing — this is the
+only search that works on arbitrary unsorted data. The contract wrinkle is
+duplicates: the scan direction guarantees the first match is the one
+reported.
+
 ## Required API
 
 ```rust
 pub fn linear_search<T: PartialEq>(items: &[T], target: &T) -> Option<usize>;
 ```
 
-The checked-in source is still the scaffold stub `pub fn exercise()`,
-which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 

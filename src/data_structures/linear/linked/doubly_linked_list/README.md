@@ -3,6 +3,15 @@
 Generic linked list with forward and backward links per node, implemented with
 owned bidirectional nodes and without `std::collections::LinkedList`.
 
+## How It Works
+
+The singly list with a second pointer per node (prev) and a held tail.
+Both ends become O(1), and indexed operations walk from whichever end is
+nearer, halving the worst-case steps. The bookkeeping invariant that makes
+removal correct: after any mutation, node->next->prev == node and
+node->prev->next == node everywhere — the boundary cases (first node, last
+node, sole node) are exactly where first/last syncing must hold.
+
 ## Required API
 
 ```rust

@@ -3,14 +3,22 @@
 Comparison sort that grows a sorted prefix by shifting each new element left
 until it reaches its correct position.
 
+## How It Works
+
+Sorting cards in a hand. An invisible line divides the array: left of it is
+sorted, right of it is raw. Each round takes the first raw element and walks
+it leftward through the sorted region, shifting strictly-greater elements one
+slot right, and drops it in front of the first element that is not greater.
+Stopping at the first non-greater element is what preserves the order of
+equals (stability), and it is why already-sorted input costs one comparison
+per element: each new element only travels as far as it is displaced.
+
 ## Required API
 
 ```rust
 pub fn insertion_sort<T: Ord>(items: &mut [T]);
 ```
 
-The checked-in source is still the scaffold stub `pub fn exercise()`,
-which panics via `todo!`; the ignored test marks the unimplemented state.
 
 ## Contract
 

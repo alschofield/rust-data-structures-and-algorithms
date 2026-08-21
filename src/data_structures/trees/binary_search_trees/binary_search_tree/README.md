@@ -3,6 +3,18 @@
 Generic unbalanced ordered collection of owned values, ordered by the `Ord`
 implementation of the element type.
 
+## How It Works
+
+Binary search as a shape. Every node obeys one invariant: all values in its
+left subtree order before it, all in its right subtree after. Lookup is a
+root-to-leaf descent discarding half the remaining tree per comparison —
+O(log n) when the tree is balanced, O(n) when sorted insertions degenerate
+it into a chain. In-order traversal (left, node, right) visits values in
+sorted order. Removal is the structural exercise: leaves detach, one-child
+nodes promote the child, and two-child nodes swap in their in-order
+successor — the smallest value of the right subtree — before deleting it
+from where it was.
+
 ## Required API
 
 ```rust
@@ -14,6 +26,9 @@ impl<T: Ord> BinarySearchTree<T> {
     pub fn get(&self, key: &T) -> Option<&T>;
     pub fn remove(&mut self, key: &T) -> Option<T>;
     pub fn contains(&self, key: &T) -> bool;
+    pub fn in_order<F>(&self, visit: F) -> bool
+    where
+        F: FnMut(&T) -> bool;
     pub fn len(&self) -> usize;
     pub fn is_empty(&self) -> bool;
 }
@@ -33,7 +48,8 @@ impl<T: Ord> Default for BinarySearchTree<T> {
   detaches and returns the stored value by value.
 - `remove` must handle leaf nodes, single-child nodes, two-child nodes
   (replace with the in-order successor), and the root.
-- In-order traversal of the tree yields values in strictly increasing order.
+- In-order traversal visits values in strictly increasing order and stops,
+  returning `false`, when the visitor returns `false`.
 - Dropping the tree drops every node iteratively (no recursion-depth panic on
   degenerate chains) and each value exactly once. Do not delegate to
   `std::collections::BTreeMap`/`BTreeSet`.

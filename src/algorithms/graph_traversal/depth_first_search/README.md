@@ -3,6 +3,17 @@
 Graph traversal that explores as far as possible along each branch before
 backtracking, using recursion or an explicit stack.
 
+## How It Works
+
+Charge down one path as far as it goes; back up only at dead ends and try
+the next branch — maze-running with a hand on the wall. The stack (explicit,
+or the call stack via recursion) creates that order, and the visited set is
+what terminates loops on cyclic graphs. Swap DFS's stack for a queue and it
+becomes BFS; the frontier discipline is the entire difference between them.
+DFS's finish ordering — a vertex finishes only after everything reachable
+through it finishes — is the foundation topological sort and cycle detection
+build on.
+
 ## Required API
 
 ```rust
@@ -12,8 +23,6 @@ pub fn depth_first_search(
 ) -> Option<Vec<usize>>;
 ```
 
-The checked-in source is still the scaffold stub `pub fn exercise()`,
-which panics via `todo!`; the ignored test marks the unimplemented state.
 `AdjacencyList` is the graph from
 `data_structures/graphs/representations/adjacency_list`.
 Discovery/finish-time variants extend the same shape.

@@ -3,14 +3,22 @@
 Divide-and-conquer comparison sort that recursively sorts halves and merges
 them with an auxiliary buffer.
 
+## How It Works
+
+Divide and conquer. Split the array in half, sort each half (recursively,
+down to single elements, which are trivially sorted), then merge: walk both
+sorted halves front-to-front, repeatedly taking the smaller head into the
+output. The merge is where the work and the guarantees live — taking from the
+left run on ties is what makes the sort stable, and no input order can make
+merging degrade, which is why the cost is O(n log n) unconditionally. The
+price is the O(n) auxiliary buffer the merge writes into.
+
 ## Required API
 
 ```rust
 pub fn merge_sort<T: Ord + Clone>(items: &mut [T]);
 ```
 
-The checked-in source is still the scaffold stub `pub fn exercise()`,
-which panics via `todo!`; the ignored test marks the unimplemented state.
 An ownership-based variant avoiding `Clone` is equally acceptable.
 
 ## Contract

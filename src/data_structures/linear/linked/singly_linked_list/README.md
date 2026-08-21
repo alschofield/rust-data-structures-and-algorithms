@@ -2,6 +2,15 @@
 
 Generic head-only linked list of owned boxed nodes with indexed operations.
 
+## How It Works
+
+A chain of nodes, each holding a value and a pointer to the next. The list
+holds only the head, so the front is O(1) and everything else is a walk —
+push back must traverse all n nodes because nothing remembers the tail.
+Insertion and removal never shift elements; they re-point two pointers.
+The trade against the dynamic array: cheap splicing, but every step is a
+dependent pointer load with no cache locality.
+
 ## Required API
 
 ```rust
@@ -9,6 +18,10 @@ pub struct SinglyLinkedList<T> { /* fields private */ }
 
 impl<T> SinglyLinkedList<T> {
     pub fn new() -> Self;
+    pub fn push_front(&mut self, item: T);
+    pub fn push_back(&mut self, item: T);
+    pub fn pop_front(&mut self) -> Option<T>;
+    pub fn pop_back(&mut self) -> Option<T>;
     pub fn insert(&mut self, index: usize, item: T) -> Result<(), T>;
     pub fn get(&self, index: usize) -> Option<&T>;
     pub fn remove(&mut self, index: usize) -> Option<T>;
@@ -25,6 +38,8 @@ impl<T> Default for SinglyLinkedList<T> {
 
 - Nodes are owned via `Box`, linked as `Option<Box<Node<T>>>` from a single
   head pointer; each node owns its successor.
+- `push_front`/`pop_front` operate at the held head pointer; `push_back` and
+  `pop_back` traverse from that head because the list deliberately has no tail.
 - Valid element indexes are `[0, len)`; `insert` also accepts `len` to append.
 - `insert` at an out-of-range index fails with `Err(item)`, returning
   ownership of the rejected item; the list is unchanged.
@@ -37,7 +52,7 @@ impl<T> Default for SinglyLinkedList<T> {
 
 ## Complexity Targets
 
-- `insert`/`remove` at index 0: O(1)
-- `get`, `insert`, `remove` at index i: O(i), worst O(n)
+- `push_front`, `pop_front`, `len`, `is_empty`: O(1)
+- `push_back`, `pop_back`, `get`, `insert`, `remove`: O(n)
 - `len`, `is_empty`: O(1)
 - Space: O(n) nodes, one pointer of overhead per node
